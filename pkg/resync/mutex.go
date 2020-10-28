@@ -7,15 +7,25 @@ import (
 	"time"
 )
 
+type Sync struct {
+	client *redis.Client
+}
+
+func NewSync(client *redis.Client) *Sync {
+	return &Sync{
+		client:client,
+	}
+}
+
 type Mutex struct {
 	key    string
 	client *redis.Client
 }
 
-func NewMutex(client *redis.Client, key string) *Mutex {
+func (s *Sync) NewMutex(key string) *Mutex {
 	return &Mutex{
+		client: s.client,
 		key:    key,
-		client: client,
 	}
 }
 
