@@ -1,0 +1,5 @@
+*.exe
+.idea
+go.sum
+example/greeter/greeter-server/bin/greeter-server*
+example/greeter/greeter-client/bin/greeter-client*

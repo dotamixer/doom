@@ -1,0 +1,29 @@
+server:
+  registryAddr: 192.168.203.40:8500
+  port: 9000
+
+log:
+  logGrpc: true
+  outputPaths:
+    - ./log/greeter.log
+    - stdout
+  rotationMaxSize: 50
+  rotationMaxBackups: 1
+  rotationMaxAge: 24
+  logLevel: debug
+
+#redis:
+#  addr: 127.0.0.1:8080
+#  password: xxx
+#  readTimeout: 5s
+#  maxIdle: 128
+#
+#mongodb:
+#  hosts: xxx
+#  user: epan
+#  password: xxx
+#  connectTimeout: 5s
+#  maxConnIdleTime: 5s
+#  poolLimit: 50
+#  replicaSet: sss
+#  authSource: admin

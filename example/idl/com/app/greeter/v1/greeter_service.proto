@@ -1,0 +1,19 @@
+syntax="proto3";
+
+package com.app.greeter.v1;
+
+option go_package = "com/app/greeter/v1;greeter";
+
+service GreeterService {
+    rpc SayHello(SayHelloReq) returns (SayHelloRsp) {
+
+    };
+}
+
+message SayHelloReq {
+    string name = 1;
+}
+
+message SayHelloRsp {
+    string msg = 2;
+}

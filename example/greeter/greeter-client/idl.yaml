@@ -1,0 +1,26 @@
+###################基础配置#####################
+#导入路径可以设置环境变量: $GOPATH 或者 ${GOPATH}
+#项目基础导入目录
+module: github.com/dotamixer/doom/example/greeter-client
+import_path: /home/epan/gopath/src/github.com/dotamixer/doom/example/idl
+
+#当前项目依赖的proto文件
+protos:
+  - com/app/greeter/v1/greeter_service.proto
+
+#依赖导入目录
+includes:
+#- $GOPATH/src/github.com/bilibili/kratos/third_party
+
+
+####################编译配置####################
+generate:
+  go_options:
+    extra_modifiers:
+  plugins:
+    - name: gofast #plugin choice
+      type: go   #well known type import choice
+      flags: plugins=grpc #parameter
+
+  output: ./idl # output path
+  modifier: idl
