@@ -29,18 +29,18 @@ func NewCompiler(cfg *config.Config) *Compiler {
 }
 
 func (c *Compiler) Compile(desc proto.DescriptorSource, deleteDirectory bool) (err error) {
+	outputPath := os.ExpandEnv(c.config.Generate.Output)
+	if deleteDirectory {
+		err = os.RemoveAll(outputPath)
+		if err != nil {
+			log.Fatalf("remove path failed ", outputPath)
+		}
+	}
 
 	for _, itr := range c.config.Generate.Plugins {
 		metaCmds := c.generateCmd(desc, itr.Type)
 		//插件
 		arg := fmt.Sprintf("--%s_out=", itr.Name)
-		outputPath := os.ExpandEnv(c.config.Generate.Output)
-		if deleteDirectory {
-			err = os.RemoveAll(outputPath)
-			if err != nil {
-				log.Fatalf("remove path failed ", outputPath)
-			}
-		}
 
 		err = os.MkdirAll(outputPath, os.ModePerm)
 		if err != nil {

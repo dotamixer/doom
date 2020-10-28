@@ -21,6 +21,9 @@ generate:
       - name: gofast #plugin choice
         type: go   #well known type import choice
         flags: plugins=grpc #parameter
+      - name: dm #plugin choice
+        type: go   #well known type import choice
+        #flags: plugins=dm #parameter
 
     output: ./idl # output path
     modifier: idl

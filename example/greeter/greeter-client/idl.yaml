@@ -23,7 +23,7 @@ generate:
       flags: plugins=grpc #parameter
     - name: dm
       type: go
-      flags: plugins=dm
+
 
   output: ./idl # output path
   modifier: idl

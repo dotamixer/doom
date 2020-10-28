@@ -10,7 +10,7 @@ import (
 func main() {
 	consul.SetDefaultHost("192.168.203.40:8500")
 
-	client, err := greeter.NewClient()
+	client, err := greeter.NewGreeterServiceClientByDoom()
 	if err != nil || client  == nil{
 		log.Println("Failed to new client. ", err)
 		return

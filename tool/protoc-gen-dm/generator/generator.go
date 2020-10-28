@@ -497,7 +497,7 @@ func (g *Generator) CommandLineParameters(parameter string) {
 	if pluginList != "" {
 		// Amend the set of plugins.
 		enabled := map[string]bool{
-			"kit": true,
+			"dm": true,
 		}
 		for _, name := range strings.Split(pluginList, "+") {
 			enabled[name] = true
@@ -545,9 +545,9 @@ func (g *Generator) AddImport(importPath GoImportPath) GoPackageName {
 }
 
 var globalPackageNames = map[GoPackageName]bool{
-	"fmt":   true,
-	"math":  true,
-	"proto": true,
+	//"fmt":   true,
+	//"math":  true,
+	//"proto": true,
 }
 
 // Create and remember a guaranteed unique package name. Pkg is the candidate name.
@@ -705,13 +705,13 @@ func (g *Generator) SetPackageNames() {
 	// Names of support packages. These never vary (if there are conflicts,
 	// we rename the conflicting package), so this could be removed someday.
 	g.Pkg = map[string]string{
-		"fmt":   "fmt",
-		"math":  "math",
-		"proto": "proto",
-		// table protocol need below 2 items
-		"errors": "errors",
-		"sync": "sync",
-		"encoding/json": "json",
+		//"fmt":   "fmt",
+		//"math":  "math",
+		//"proto": "proto",
+		//// table protocol need below 2 items
+		//"errors": "errors",
+		//"sync": "sync",
+		//"encoding/json": "json",
 	}
 }
 
@@ -1108,7 +1108,7 @@ func (g *Generator) generate(file *FileDescriptor) {
 	g.P("// is compatible with the proto package it is being compiled against.")
 	g.P("// A compilation error at this line likely means your copy of the")
 	g.P("// proto package needs to be updated.")
-	g.P("const _ = ", g.Pkg["proto"], ".GoGoProtoPackageIsVersion", generatedCodeVersion, " // please upgrade the proto package")
+	//g.P("const _ = ", g.Pkg["proto"], ".GoGoProtoPackageIsVersion", generatedCodeVersion, " // please upgrade the proto package")
 	g.P()
 
 	for _, td := range g.file.imp {
@@ -1249,30 +1249,30 @@ func (g *Generator) generateImports() {
 	// We almost always need a proto import.  Rather than computing when we
 	// do, which is tricky when there's a plugin, just import it and
 	// reference it later. The same argument applies to the fmt and math packages.
-	g.P("import (")
-	g.P(g.Pkg["fmt"] + ` "fmt"`)
-	g.P(g.Pkg["math"] + ` "math"`)
-	g.P(g.Pkg["proto"]+" ", GoImportPath(g.ImportPrefix)+"github.com/gogo/protobuf/proto")
-	for importPath, packageName := range imports {
-		g.P(packageName, " ", GoImportPath(g.ImportPrefix)+importPath)
-	}
-	g.P(g.Pkg["errors"] + ` "errors"`)
-	g.P(g.Pkg["sync"] + ` "sync"`)
-	g.P(g.Pkg["encoding/json"] + ` "encoding/json"`)
-	g.P(")")
-	g.P()
+	//g.P("import (")
+	//g.P(g.Pkg["fmt"] + ` "fmt"`)
+	//g.P(g.Pkg["math"] + ` "math"`)
+	//g.P(g.Pkg["proto"]+" ", GoImportPath(g.ImportPrefix)+"github.com/gogo/protobuf/proto")
+	//for importPath, packageName := range imports {
+	//	g.P(packageName, " ", GoImportPath(g.ImportPrefix)+importPath)
+	//}
+	//g.P(g.Pkg["errors"] + ` "errors"`)
+	//g.P(g.Pkg["sync"] + ` "sync"`)
+	//g.P(g.Pkg["encoding/json"] + ` "encoding/json"`)
+	//g.P(")")
+	//g.P()
 	// TODO: may need to worry about uniqueness across plugins
 	for _, p := range plugins {
 		p.GenerateImports(g.file, imports)
 		g.P()
 	}
-	g.P("// Reference imports to suppress errors if they are not otherwise used.")
-	g.P("var _ = ", g.Pkg["proto"], ".Marshal")
-	g.P("var _ = ", g.Pkg["fmt"], ".Errorf")
-	g.P("var _ = ", g.Pkg["math"], ".Inf")
-	g.P("var _ = ", g.Pkg["errors"], ".New")
-	g.P("var _ ", g.Pkg["sync"], ".Once")
-	g.P("var _ = ", g.Pkg["encoding/json"], ".Unmarshal")
+	//g.P("// Reference imports to suppress errors if they are not otherwise used.")
+	//g.P("var _ = ", g.Pkg["proto"], ".Marshal")
+	//g.P("var _ = ", g.Pkg["fmt"], ".Errorf")
+	//g.P("var _ = ", g.Pkg["math"], ".Inf")
+	//g.P("var _ = ", g.Pkg["errors"], ".New")
+	//g.P("var _ ", g.Pkg["sync"], ".Once")
+	//g.P("var _ = ", g.Pkg["encoding/json"], ".Unmarshal")
 
 	g.P()
 }

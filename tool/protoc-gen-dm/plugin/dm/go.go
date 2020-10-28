@@ -23,7 +23,7 @@ func (g *dm) GenerateImports(file *generator.FileDescriptor, imports map[generat
 	}
 
 		g.P("import (")
-		g.P(grpcPkgPath, " ", strconv.Quote(path.Join(g.gen.ImportPrefix, grpcPkgPath)))
+		g.P(strconv.Quote(path.Join(g.gen.ImportPrefix, grpcPkgPath)))
 		g.P(")")
 		g.P()
 
@@ -47,11 +47,11 @@ func (g *dm) generateNewClient(file *generator.FileDescriptor, service *pb.Servi
 	servName := generator.CamelCase(origServName)
 
 
-	g.P("func New", servName, "Client() (client ", servName,"Client, err error) {")
+	g.P("func New", servName, "ClientByDoom() (client ", servName,"Client, err error) {")
 	g.P("var (")
 	g.P("conn *grpc.ClientConn")
 	g.P(")")
-	g.P("conn, err = grpc.Dial(",  strconv.Quote("consul://default/" + *file.Package))
+	g.P("conn, err = grpc.Dial(",  strconv.Quote("consul://default/" + *file.Package), ",")
 	g.P("grpc.WithInsecure())")
 	g.P("if err != nil {")
 	g.P("return")

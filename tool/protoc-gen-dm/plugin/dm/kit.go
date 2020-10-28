@@ -20,7 +20,7 @@ type dm struct {
 
 // Name returns the name of this plugin, "dm".
 func (g *dm) Name() string {
-	return "kit"
+	return "dm"
 }
 
 // The names for packages imported in the generated code.
