@@ -12,7 +12,7 @@ func NewClient() (client GreeterServiceClient, err error) {
 	var (
 		conn *grpc.ClientConn
 	)
-	conn, err = grpc.Dial("consul://default/com.app.greeter.v1",
+	conn, err = grpc.Dial("consul://default/com.app.greeter.v1?tag=uuid",
 		grpc.WithInsecure())
 	if err != nil {
 		return
