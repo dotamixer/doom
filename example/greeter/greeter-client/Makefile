@@ -12,5 +12,9 @@ all:
 idl:
 	doom-protoc generate
 
+docker:
+	docker build -t 192.168.203.41:5000/greeter-client .
+	docker push 192.168.203.41:5000/greeter-client
+
 clean:
 	rm -f ./bin/${OUTPUT}
