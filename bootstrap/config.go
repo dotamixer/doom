@@ -51,7 +51,7 @@ func (s *Server) loadConfig() {
 	}
 
 	if ret.Scheme == "file" {
-		err = lion.Load(file.NewSource(file.WithPath(filepath.Join("..", ret.Path))))
+		err = lion.Load(file.NewSource(file.WithPath(filepath.Join(ret.Path))))
 		if err != nil {
 			logrus.Fatal(err)
 		}
