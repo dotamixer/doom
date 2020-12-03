@@ -19,7 +19,7 @@ func NewClient(opts *Options) (client *mongo.Client, err error) {
 		SetConnectTimeout(time.Second * 5).
 		SetMaxConnIdleTime(time.Second)
 
-	if len(opts.Username) == 0 {
+	if len(opts.Username) != 0 {
 		clientOptions.Auth = &options.Credential{
 			Username:   opts.Username,
 			Password:   opts.Password,
