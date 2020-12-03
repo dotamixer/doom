@@ -13,7 +13,7 @@ import (
 	"github.com/dotamixer/doom/pkg/register"
 	"github.com/dotamixer/doom/pkg/register/consul"
 	"github.com/dotamixer/doom/pkg/store/mongo"
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v7"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 	"google.golang.org/grpc"

@@ -8,7 +8,7 @@ import (
 	"github.com/dotamixer/doom/pkg/lion"
 	"github.com/dotamixer/doom/pkg/lion/source/file"
 	"github.com/dotamixer/doom/pkg/store/mongo"
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v7"
 	"github.com/sirupsen/logrus"
 )
 

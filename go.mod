@@ -11,10 +11,11 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-playground/form v3.1.4+incompatible
-	github.com/go-redis/redis/v8 v8.3.2
+	github.com/go-redis/redis/v7 v7.4.0
 	github.com/gogo/protobuf v1.2.1
-	github.com/golang/protobuf v1.4.2
+	github.com/golang/protobuf v1.3.4
 	github.com/golang/snappy v0.0.2 // indirect
+	github.com/google/go-cmp v0.5.3 // indirect
 	github.com/google/wire v0.4.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.0.0
 	github.com/hashicorp/consul/api v1.7.0
@@ -35,11 +36,8 @@ require (
 	github.com/stretchr/testify v1.6.1
 	go.mongodb.org/mongo-driver v1.4.2
 	go.uber.org/dig v1.10.0
-	google.golang.org/genproto v0.0.0-20201006033701-bcad7cf615f2 // indirect
-	google.golang.org/grpc v1.32.0
-	google.golang.org/protobuf v1.25.0 // indirect
+	google.golang.org/grpc v1.30.0
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0
-	honnef.co/go/tools v0.0.1-2020.1.4
 )

@@ -3,7 +3,7 @@ package resync
 import (
 	"context"
 	"fmt"
-	"github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v7"
 	"time"
 )
 
