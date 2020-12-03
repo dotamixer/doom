@@ -50,8 +50,9 @@ func (s *Server) loadConfig() {
 		logrus.Fatal(err)
 	}
 
+	logrus.Infof("ret:%+v", *ret)
 	if ret.Scheme == "file" {
-		err = lion.Load(file.NewSource(file.WithPath(filepath.Join(ret.Path))))
+		err = lion.Load(file.NewSource(file.WithPath(filepath.Join(".", ret.Path))))
 		if err != nil {
 			logrus.Fatal(err)
 		}
@@ -67,7 +68,7 @@ func (s *Server) loadConfig() {
 		s.loadRedisConfig()
 	}
 
-	if s.opts.withMongo {
+	if s.opts.withMongoDB {
 		s.loadMongoConfig()
 	}
 }
@@ -81,7 +82,7 @@ func (s *Server) loadLogConfig() {
 		logrus.Fatal(err)
 	}
 
-	logrus.Info("load log config success")
+	logrus.Infof("load log config success. config:[%+v]", *s.logConfig)
 }
 
 func (s *Server) loadServerConfig() {
@@ -91,7 +92,7 @@ func (s *Server) loadServerConfig() {
 	if err != nil {
 		logrus.Fatal(err)
 	}
-	logrus.Info("load server config success")
+	logrus.Infof("load server config success. config:[%+v]", s.srvConfig)
 }
 
 func (s *Server) loadRedisConfig() {
@@ -102,19 +103,19 @@ func (s *Server) loadRedisConfig() {
 		logrus.Fatal(err)
 	}
 
-	logrus.Info("load redis config success")
+	logrus.Infof("load redis config success. config:[%+v]", *s.redisConfig)
 
 }
 
 func (s *Server) loadMongoConfig() {
 	s.mongoConfig = &MongoConfig{}
 
-	err := lion.Get("mongo").Scan(s.mongoConfig)
+	err := lion.Get("mongodb").Scan(s.mongoConfig)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 
-	logrus.Info("load mongo config success")
+	logrus.Infof("load mongo config success, config:[%+v]", *s.mongoConfig)
 
 }
 

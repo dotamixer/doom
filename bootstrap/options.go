@@ -5,7 +5,8 @@ import "google.golang.org/grpc"
 type Options struct {
 	registerGrpcCallback func(server *grpc.Server)
 	withRedis            bool
-	withMongo            bool
+	withMongoDB            bool
+	withRegister		 bool
 	serviceName          string
 }
 
@@ -30,6 +31,18 @@ func WithRegisterGrpcCallback(fn func(server *grpc.Server)) Option {
 func WithRedis(is bool) Option {
 	return func(o *Options) {
 		o.withRedis = is
+	}
+}
+
+func WithMongoDB(is bool) Option {
+	return func(o *Options) {
+		o.withMongoDB = is
+	}
+}
+
+func WithRegister(is bool) Option {
+	return func(o *Options) {
+		o.withRegister = is
 	}
 }
 

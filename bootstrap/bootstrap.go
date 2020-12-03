@@ -90,7 +90,7 @@ func (s *Server) initDI() {
 		di.MustContainerProvide(s.Container, redis.NewClient)
 	}
 
-	if s.opts.withMongo {
+	if s.opts.withMongoDB {
 		di.MustContainerProvide(s.Container, s.NewMongoOptions)
 		di.MustContainerProvide(s.Container, mongo.NewClient)
 	}
@@ -102,15 +102,19 @@ func (s *Server) initGrpcServer() {
 	var (
 		err error
 	)
-	s.registry, err = consul.NewRegister(&register.Options{
-		RegistryAddr: s.srvConfig.RegistryAddr,
-		Name:         s.opts.serviceName,
-		Port:         s.srvConfig.Port,
-	})
-	if err != nil {
-		logrus.Fatalf("Failed to new register. err:[%v]", err)
-		return
+
+	if s.opts.withRegister {
+		s.registry, err = consul.NewRegister(&register.Options{
+			RegistryAddr: s.srvConfig.RegistryAddr,
+			Name:         s.opts.serviceName,
+			Port:         s.srvConfig.Port,
+		})
+		if err != nil {
+			logrus.Fatalf("Failed to new register. err:[%v]", err)
+			return
+		}
 	}
+
 
 	s.grpcSrv = grpc.NewServer()
 
@@ -126,7 +130,7 @@ func (s *Server) Run() {
 	}
 
 	go func() {
-		logrus.Info("grpc Server is serving...")
+		logrus.Infof("grpc Server is serving(addr:%s)...", lis.Addr())
 
 		err = s.grpcSrv.Serve(lis)
 		if err != nil {
@@ -134,10 +138,12 @@ func (s *Server) Run() {
 		}
 	}()
 
-	// 注册服务
-	err = s.registry.Register()
-	if err != nil {
-		logrus.Fatalf("Failed to register service. err:[%v]", err)
+	if s.opts.withRegister {
+		// 注册服务
+		err = s.registry.Register()
+		if err != nil {
+			logrus.Fatalf("Failed to register service. err:[%v]", err)
+		}
 	}
 
 	c := make(chan os.Signal, 1)
@@ -149,7 +155,11 @@ func (s *Server) Run() {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 
 			s.Stop()
-			_ = s.registry.Deregister()
+
+			if s.opts.withRegister {
+				_ = s.registry.Deregister()
+			}
+
 			time.Sleep(time.Second)
 			return
 		case syscall.SIGHUP:

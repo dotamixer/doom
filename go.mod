@@ -34,7 +34,7 @@ require (
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.6.1
-	go.mongodb.org/mongo-driver v1.4.2
+	go.mongodb.org/mongo-driver v1.3.2
 	go.uber.org/dig v1.10.0
 	google.golang.org/grpc v1.30.0
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
