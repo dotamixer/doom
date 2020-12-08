@@ -21,7 +21,7 @@ func initLogrus(options *Options) (err error) {
 		logrus.FieldKeyFunc:  "caller",
 	}
 
-	var ws  []io.Writer
+	var ws []io.Writer
 	var hasStdout bool
 	for _, output := range options.OutputPaths {
 		if output == "stdout" {

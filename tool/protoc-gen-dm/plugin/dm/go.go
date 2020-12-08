@@ -22,18 +22,17 @@ func (g *dm) GenerateImports(file *generator.FileDescriptor, imports map[generat
 		return
 	}
 
-		g.P("import (")
-		g.P(strconv.Quote(path.Join(g.gen.ImportPrefix, grpcPkgPath)))
-		g.P(")")
-		g.P()
+	g.P("import (")
+	g.P(strconv.Quote(path.Join(g.gen.ImportPrefix, grpcPkgPath)))
+	g.P(")")
+	g.P()
 
-		// We need to keep track of imported packages to make sure we don't produce
-		// a name collision when generating types.
-		pkgImports = make(map[generator.GoPackageName]bool)
-		for _, name := range imports {
-			pkgImports[name] = true
-		}
-
+	// We need to keep track of imported packages to make sure we don't produce
+	// a name collision when generating types.
+	pkgImports = make(map[generator.GoPackageName]bool)
+	for _, name := range imports {
+		pkgImports[name] = true
+	}
 
 }
 
@@ -46,12 +45,11 @@ func (g *dm) generateNewClient(file *generator.FileDescriptor, service *pb.Servi
 	origServName := service.GetName()
 	servName := generator.CamelCase(origServName)
 
-
-	g.P("func New", servName, "ClientByDoom() (client ", servName,"Client, err error) {")
+	g.P("func New", servName, "ClientByDoom() (client ", servName, "Client, err error) {")
 	g.P("var (")
 	g.P("conn *grpc.ClientConn")
 	g.P(")")
-	g.P("conn, err = grpc.Dial(",  strconv.Quote("consul://default/" + *file.Package), ",")
+	g.P("conn, err = grpc.Dial(", strconv.Quote("consul://default/"+*file.Package), ",")
 	g.P("grpc.WithInsecure())")
 	g.P("if err != nil {")
 	g.P("return")

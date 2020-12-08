@@ -15,6 +15,6 @@ func MustContainerProvide(c *dig.Container, constructor interface{}, opts ...dig
 func MustContainerInvoke(c *dig.Container, function interface{}, opts ...dig.InvokeOption) {
 	err := c.Invoke(function, opts...)
 	if err != nil {
-		logrus.Fatalf( "Failed to invoke. err:[%v]", err)
+		logrus.Fatalf("Failed to invoke. err:[%v]", err)
 	}
 }

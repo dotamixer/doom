@@ -43,7 +43,7 @@ func NewServer(opts ...Option) (s *Server) {
 	options := NewOptions(opts...)
 
 	s = &Server{
-		opts: options,
+		opts:      options,
 		Container: dig.New(),
 	}
 
@@ -68,7 +68,7 @@ func (s *Server) Init(opts ...Option) {
 func (s *Server) initLog() {
 	opt := &log.Options{
 		LogGrpc:            s.logConfig.LogGrpc,
-		OutputPaths:         s.logConfig.OutputPaths,
+		OutputPaths:        s.logConfig.OutputPaths,
 		RotationMaxSize:    s.logConfig.RotationMaxSize,
 		RotationMaxBackups: s.logConfig.RotationMaxBackups,
 		RotationMaxAge:     s.logConfig.RotationMaxAge,
@@ -83,7 +83,6 @@ func (s *Server) initLog() {
 }
 
 func (s *Server) initDI() {
-
 
 	if s.opts.withRedis {
 		di.MustContainerProvide(s.Container, s.NewRedisOptions)
@@ -114,7 +113,6 @@ func (s *Server) initGrpcServer() {
 			return
 		}
 	}
-
 
 	s.grpcSrv = grpc.NewServer()
 

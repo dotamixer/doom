@@ -14,16 +14,16 @@ import (
 
 type ServerConfig struct {
 	RegistryAddr string `yaml:"registryAddr"`
-	Port int `yaml:"port"`
+	Port         int    `yaml:"port"`
 }
 
 type LogConfig struct {
-	LogGrpc            bool   `yaml:"logGrpc"`            //记录GRPC 框架日志
-	OutputPaths        []string `yaml:"outputPaths"`         //日志输出路径
-	RotationMaxSize    int    `yaml:"rotationMaxSize"`    // 切割日志大小
-	RotationMaxBackups int    `yaml:"rotationMaxBackups"` // 备份多少个
-	RotationMaxAge     int    `yaml:"rotationMaxAge"`     //最大时间
-	LogLevel           string `yaml:"logLevel"`
+	LogGrpc            bool     `yaml:"logGrpc"`            //记录GRPC 框架日志
+	OutputPaths        []string `yaml:"outputPaths"`        //日志输出路径
+	RotationMaxSize    int      `yaml:"rotationMaxSize"`    // 切割日志大小
+	RotationMaxBackups int      `yaml:"rotationMaxBackups"` // 备份多少个
+	RotationMaxAge     int      `yaml:"rotationMaxAge"`     //最大时间
+	LogLevel           string   `yaml:"logLevel"`
 }
 
 type RedisConfig struct {

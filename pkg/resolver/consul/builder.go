@@ -13,7 +13,6 @@ import (
 // All target URLs like 'consul://.../...' will be resolved by this resolver
 const schemeName = "consul"
 
-
 // builder implements resolver.Builder and use for constructing all consul resolvers
 type builder struct{}
 

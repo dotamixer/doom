@@ -13,7 +13,7 @@ type Sync struct {
 
 func NewSync(client *redis.Client) *Sync {
 	return &Sync{
-		client:client,
+		client: client,
 	}
 }
 
