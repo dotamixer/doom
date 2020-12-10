@@ -1,9 +1,11 @@
 package bootstrap
 
 import (
+	"github.com/dotamixer/doom/pkg/pprof"
 	"net/url"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/dotamixer/doom/pkg/lion"
 	"github.com/dotamixer/doom/pkg/lion/source/file"
@@ -40,6 +42,12 @@ type MongoConfig struct {
 	ReplicaSet  string   `yaml:"replicaSet"`
 }
 
+type PProfConfig struct {
+	IsEnabled bool `yaml:"isEnabled"`
+	Path string `yaml:"path"`
+	Frequency time.Duration `yaml:"frequency"`
+}
+
 func (s *Server) loadConfig() {
 
 	rawUrl := os.Getenv("DOOM_SERVICE_CONFIG")
@@ -61,6 +69,8 @@ func (s *Server) loadConfig() {
 	}
 
 	s.loadLogConfig()
+
+	s.loadPProfConfig()
 
 	s.loadServerConfig()
 
@@ -116,7 +126,51 @@ func (s *Server) loadMongoConfig() {
 	}
 
 	logrus.Infof("load mongo config success, config:[%+v]", *s.mongoConfig)
+}
 
+func (s *Server) loadPProfConfig() {
+	s.pprofConfig = &PProfConfig{}
+
+	err := lion.Get("pprof").Scan(s.pprofConfig)
+	if err != nil {
+		logrus.Fatal(err)
+	}
+
+	logrus.Infof("load pprof config success. config:[%+v]", *s.pprofConfig)
+
+	w, err := lion.Watch("pprof")
+	if err != nil {
+		logrus.Infof("Failed to watch pprof. err:[%v]", err)
+		return
+	}
+
+	h := pprof.NewHandler()
+
+	if s.pprofConfig.IsEnabled {
+		opt := s.NewPProfOptions()
+		h.Start(opt)
+	}
+
+	go func() {
+		v, err := w.Next()
+		if err != nil {
+			logrus.Infof("Failed to get next pprof config from watcher. err:[%v]", err)
+			return
+		}
+
+		err = v.Scan(s.pprofConfig)
+		if err != nil {
+			logrus.Errorf("Failed to scan pprof config. err:[%v]", err)
+			return
+		}
+
+		h.Stop()
+
+		opt := s.NewPProfOptions()
+		if s.pprofConfig.IsEnabled {
+			h.Start(opt)
+		}
+	}()
 }
 
 func (s *Server) NewRedisOptions() *redis.Options {
@@ -134,5 +188,12 @@ func (s *Server) NewMongoOptions() *mongo.Options {
 		AuthSource:  s.mongoConfig.AuthSource,
 		MaxPoolSize: s.mongoConfig.MaxPoolSize,
 		ReplicaSet:  s.mongoConfig.ReplicaSet,
+	}
+}
+
+func (s *Server) NewPProfOptions() *pprof.Options {
+	return &pprof.Options{
+		Path:      s.pprofConfig.Path,
+		Frequency: s.pprofConfig.Frequency,
 	}
 }

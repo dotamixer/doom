@@ -36,6 +36,8 @@ type Server struct {
 	redisConfig *RedisConfig
 	// mongoConfig is redis configuration
 	mongoConfig *MongoConfig
+	// pprofConfig is pprof configuration
+	pprofConfig *PProfConfig
 }
 
 func NewServer(opts ...Option) (s *Server) {

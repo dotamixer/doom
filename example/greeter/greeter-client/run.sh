@@ -1,6 +1,10 @@
 #!/bin/bash
 
-bin=greeter-client
+if [[ $(OS), Windows_NT ]];then
+    bin=greeter-client.exe
+else
+    bin=greeter-client
+fi
 
 cd bin && ./${bin}
 cd -
