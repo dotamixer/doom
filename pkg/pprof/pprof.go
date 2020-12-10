@@ -30,6 +30,9 @@ func (h *Handler) Start(opts *Options) {
 
 	h.ctx, h.cancel = context.WithCancel(context.TODO())
 
+	go h.cpuProfile()
+	go h.heapProfile()
+
 	go func() {
 		ticker := time.NewTicker(opts.Frequency)
 
@@ -86,7 +89,7 @@ func (h *Handler) cpuProfile() {
 
 // 生成堆内存报告
 func (h *Handler) heapProfile() {
-	filename := fmt.Sprintf("cpu_%s.prof", getFileName())
+	filename := fmt.Sprintf("heap_%s.prof", getFileName())
 	fp := filepath.Join(h.opts.Path, filename)
 
 	f, err := os.OpenFile(fp, os.O_RDWR|os.O_CREATE, 0644)
