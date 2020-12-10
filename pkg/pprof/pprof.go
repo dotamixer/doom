@@ -3,6 +3,7 @@ package pprof
 import (
 	"context"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
 	"runtime/pprof"
@@ -24,6 +25,8 @@ func NewHandler() *Handler {
 
 func (h *Handler) Start(opts *Options) {
 	h.opts = opts
+
+	logrus.Infof("start pprof... opt:[%+v]", *opts)
 
 	h.ctx, h.cancel = context.WithCancel(context.TODO())
 
