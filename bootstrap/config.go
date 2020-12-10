@@ -43,9 +43,9 @@ type MongoConfig struct {
 }
 
 type PProfConfig struct {
-	IsEnabled bool `yaml:"isEnabled"`
-	Path string `yaml:"path"`
-	Frequency time.Duration `yaml:"frequency"`
+	IsEnabled bool          `yaml:"isEnabled"`
+	Path      string        `yaml:"path"`
+	Frequency string `yaml:"frequency"`
 }
 
 func (s *Server) loadConfig() {
@@ -192,8 +192,12 @@ func (s *Server) NewMongoOptions() *mongo.Options {
 }
 
 func (s *Server) NewPProfOptions() *pprof.Options {
+	freq, err := time.ParseDuration(s.pprofConfig.Frequency)
+	if err != nil {
+		logrus.Errorf("Failed to parse frequency duration. err:[%v]", err)
+	}
 	return &pprof.Options{
 		Path:      s.pprofConfig.Path,
-		Frequency: s.pprofConfig.Frequency,
+		Frequency: freq,
 	}
 }
