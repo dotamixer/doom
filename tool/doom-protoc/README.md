@@ -29,7 +29,7 @@ Use "prototool [command] --help" for more information about a command.
 
 # 依赖
 
-格式化功能依赖clang-format;请下在clang-format 后将clang-format 放到PATH 环境变量下；
+格式化功能依赖 clang-format;请下在clang-format 后将clang-format 放到PATH 环境变量下；
 
 # 参考
 ###  同类工具
