@@ -1,3 +1,5 @@
 # doom
 
-doom is a micro-service development kit based on grpc
+doom is a micro-service development kit based on grpc 
+
+example
