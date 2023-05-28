@@ -19,7 +19,7 @@ generate:
     extra_modifiers:
   plugins:
     - name: gofast #plugin choice
-      type: go   #well known type import choice
+      type: go  
       flags: plugins=grpc #parameter
     - name: dm
       type: go
