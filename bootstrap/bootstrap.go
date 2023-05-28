@@ -148,6 +148,7 @@ func (s *Server) Run() {
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
+	
 	for {
 		sig := <-c
 		logrus.Infof("capture a signal. signal:[%s]", sig.String())
